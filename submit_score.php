@@ -37,14 +37,12 @@
         $result = mysqli_query($sql_db, $query);
         $values = mysqli_fetch_assoc($result);
         $defined_round_id = $values['defined_round_id'];
-        mysqli_free_result($result);
         
         // store number of ends associated with that defined round
         $query = "SELECT (num_ends) FROM DefinedRounds WHERE defined_round_id = $defined_round_id";
         $result = mysqli_query($sql_db, $query);
         $values = mysqli_fetch_assoc($result);
         $num_ends = $values['num_ends'];
-        mysqli_free_result($result);
         
         // find the first defined range under the defined round; store target_size and target_distance
         $query = "SELECT (target_size, target_distance) FROM DefinedRanges WHERE defined_round_id = $defined_round_id ORDER BY order_num LIMIT 1";
@@ -52,13 +50,32 @@
         $values = mysqli_fetch_assoc($result);
         $target_size = $values['target_size'];
         $target_distance = $values['target_distance'];
-        mysqli_free_result($result);
         
+        // insert 1 new range
+        $query = "INSERT INTO Ranges (archer_id, division_id, target_size, target_distance, range_date) VALUES ($archer_id, $division_id, $target_size, $target_distance, $range_date)";
+        $result = mysqli_query($sql_db, $query);
+        // get the id of the recently inserted range
+        $values = mysqli_fetch_assoc($result);
+        $range_id = $values['insertId'];
         
+        // insert 5-6 ends (based on num_ends)
+        for ($a = 1; $a <= $num_ends; $a++) {
+            $result = mysqli_query($sql_db, "INSERT INTO Ends (range_id, order_num) VALUES ($range_id, $a)");
+            $values = mysqli_fetch_assoc($result);
+            // get the ID for this end
+            $end_id = $values['insertId'];
+            // for each end, insert 6 arrows
+            for ($b = 1; $b <= 6; $b++) {
+                // get the point value of an arrow before inserting
+                $points = $_POST["points$a-$b"];
+                $result = mysqli_query($sql_db, "INSERT INTO Arrows (end_id, points) VALUES ($end_id, $points)");
+            }
+        }
+        
+        // close connection to database
+        mysqli_close($sql_db);
         ?>
         
-        
-        
-        <p>test</p>
+        <p>An insertion has been attempted. Please check the database to verify whether it worked.</p>
     </body>
 </html>
