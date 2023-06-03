@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+
+    <title>Round and Archer Entry</title>
+</head>
+<body>
+        <?php 
+           // require_once ("db_settings.php");
+            //$sql_db = @mysqli_connect($host, $user, $pwd, $db_name);
+        ?>
+
+    <h1>Choose Round</h1>
+    <form>
+        <label for="round">Select a round:</label>
+        <select id="round" name="round">
+            <option value="">Select Round</option>
+            <?php
+                // Select round_id from the rounds table
+                $round_query = "SELECT 'name' FROM DefinedRounds";
+                $round_result = mysqli_query($sql_db, $round_query);
+
+                $round_array = array();
+                while($row = mysqli_fetch_array($round_result))
+                {
+                    $round_array[] = $row['name'];
+                    echo "<option value=\"round_id\">$round</option>";
+                }
+            ?>        
+        </select>
+    </form>
+
+    <h2>Choose Archer</h2>
+    <form>
+        <label for="archer">Select an archer:</label>
+        <select id="archer" name="archer">
+            <option value="">Select Archer</option>
+            <?php
+                // Get archer name from the archers table
+                $archers_query = "SELECT archer_name FROM Archers";
+                $archers_result = mysqli_query($sql_db, $archers_query);
+
+                $archer_array = array();
+                while($row = mysqli_fetch_array($archers_result))
+                {
+                    $round_array[] = $row['archer_name'];
+                    echo "<option value=\"archer_name\">$archer_name</option>";
+                }
+            ?>
+        </select>
+    </form>
+
+    <h2>Archer Details</h2>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Type of Bow</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td><input type="text" id="firstName" name="firstName" disabled></td>
+            <td><input type="text" id="lastName" name="lastName" disabled></td>
+            <td>
+                <select id="bow" name="bow">
+                    <option value="">Select Equipment</option>
+                    <option value="Recurve">Recurve</option>
+                    <option value="Compound">Compound</option>
+                    <option value="Recurve Barebow">Recurve Barebow</option>
+                    <option value="Compound Barebow">Compound Barebow</option>
+                    <option value="Longbow">Longbow</option>
+                </select>
+            </td>
+            <td><button onclick="clear()">Clear</button></td>
+        </tr>
+    </table>
+
+    <button onclick="submit()">Done</button>
+
+    <script>
+        function submit() {
+            var round = document.getElementById('round_id').value;
+            var archer = document.getElementById('archer_name').value;
+
+            if (round === "" || archer === "") {
+                alert("Please select a round and an archer.");
+                return;
+            }
+        }
+
+        function clear() {
+            document.getElementById('round').selectedIndex = 0;
+            document.getElementById('archer').selectedIndex = 0;
+            document.getElementById('bow').selectedIndex = 0;
+        }
+    </script>
+</body>
+</html>
