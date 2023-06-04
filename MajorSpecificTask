@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Major specific Task</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="font">Iren Moser, Recurve</h1>
+    <div class="scoreboard">
+      <br>
+      <span>50m 122 cm</span>
+      <br>
+      <span>End 1</span>
+       <br>
+      <br />
+        <button >X</button>
+        <button >9</button>
+        <button >8</button>
+        <button >7</button>
+        <button >7</button>
+        <button >6</button>
+      <br />
+      <br>
+      <span>Total: <button>47</button></span>
+    </div>
+    <div class="buttons">
+      <button>X</button>
+      <button>10</button>
+      <button>9</button>
+      <button>8</button>
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button>7</button>
+      <button>3</button>
+      <button>2</button>
+      <button>1</button>
+    
+      <button >M</button>
+
+      <button>Cancel</button>
+      <button>Save</button>
+      
+    </div>
+
+    </body>
+</html>
+
+
